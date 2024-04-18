@@ -77,6 +77,16 @@ class GildedRoseTest {
     }
 
     @Test
+    @DisplayName("Given aged brie past its sell by date, updateQuality increases quality by 2")
+    void givenAgedBriePastItsSellByDateUpdateQualityIncreasesQualityBy2() {
+        Item[] items = new Item[] { new Item("Aged Brie", 0, 10) };
+        GildedRose app = new GildedRose(items);
+        int expected = 12;
+        app.updateQuality();
+        assertEquals(expected, app.items[0].quality);
+    }
+
+    @Test
     @DisplayName("Given Sulfuras, updateQuality leaves quality unchanged")
     void givenSulfurasUpdateQualityLeavesQualityUnchanged() {
         Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 10, 10) };

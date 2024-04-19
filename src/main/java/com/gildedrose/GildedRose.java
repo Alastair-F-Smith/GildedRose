@@ -78,6 +78,12 @@ class GildedRose {
     }
 
     private int determineDecreaseAmount(Item item) {
-        return item.sellIn < 0 ? 2 : 1;
+        int decrease = item.sellIn < 0 ? 2 : 1;
+        if (isConjured(item)) decrease *= 2;
+        return decrease;
+    }
+
+    private boolean isConjured(Item item) {
+        return item.name.startsWith("Conjured ");
     }
 }

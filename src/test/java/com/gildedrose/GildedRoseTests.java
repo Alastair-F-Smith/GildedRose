@@ -137,4 +137,24 @@ class GildedRoseTest {
         assertEquals(expected, app.items[0].quality);
     }
 
+    @Test
+    @DisplayName("Given a conjured item, updateQuality decreases quality by 2")
+    void givenAConjuredItemUpdateQualityDecreasesQualityBy2() {
+        Item[] items = new Item[] { new Item("Conjured Wine", 10, 10) };
+        GildedRose app = new GildedRose(items);
+        int expected = 8;
+        app.updateQuality();
+        assertEquals(expected, app.items[0].quality);
+    }
+
+    @Test
+    @DisplayName("Given a conjured item that is past its sell by date, updateQuality decreases quality by 4")
+    void givenAConjuredItemThatIsPastItsSellByDateUpdateQualityDecreasesQualityBy4() {
+        Item[] items = new Item[] { new Item("Conjured Wine", 0, 10) };
+        GildedRose app = new GildedRose(items);
+        int expected = 6;
+        app.updateQuality();
+        assertEquals(expected, app.items[0].quality);
+    }
+
 }

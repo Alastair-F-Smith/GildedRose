@@ -24,21 +24,24 @@ class GildedRose {
         return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
-    private boolean isValidBackstagePass(Item item) {
-        return item.name.equals("Backstage passes to a TAFKAL80ETC concert") && item.sellIn >= 0;
+    private void updateItemSellByDate(Item item) {
+        item.sellIn = item.sellIn - 1;
+    }
+
+    private void updateItemQuality(Item item) {
+        if (isAppreciatingItem(item)) {
+            increaseQuality(item);
+        } else {
+            decreaseQuality(item);
+        }
     }
 
     private boolean isAppreciatingItem(Item item) {
         return item.name.equals("Aged Brie") || isValidBackstagePass(item);
     }
 
-    private void decreaseQuality(Item item) {
-        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            item.quality = 0;
-        } else {
-            int decrease = determineDecreaseAmount(item);
-            item.quality = Math.max(0, item.quality - decrease);
-        }
+    private boolean isValidBackstagePass(Item item) {
+        return item.name.equals("Backstage passes to a TAFKAL80ETC concert") && item.sellIn >= 0;
     }
 
     private void increaseQuality(Item item) {
@@ -48,7 +51,7 @@ class GildedRose {
 
     private int determineIncreaseAmount(Item item) {
         return item.name.equals("Aged Brie") ? determineBrieIncrease(item)
-                                             : determineBackstagePassIncrease(item);
+                : determineBackstagePassIncrease(item);
     }
 
     private int determineBrieIncrease(Item item) {
@@ -65,19 +68,16 @@ class GildedRose {
         return amount;
     }
 
+    private void decreaseQuality(Item item) {
+        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            item.quality = 0;
+        } else {
+            int decrease = determineDecreaseAmount(item);
+            item.quality = Math.max(0, item.quality - decrease);
+        }
+    }
+
     private int determineDecreaseAmount(Item item) {
         return item.sellIn < 0 ? 2 : 1;
-    }
-
-    private void updateItemSellByDate(Item item) {
-        item.sellIn = item.sellIn - 1;
-    }
-
-    private void updateItemQuality(Item item) {
-        if (isAppreciatingItem(item)) {
-            increaseQuality(item);
-        } else {
-            decreaseQuality(item);
-        }
     }
 }

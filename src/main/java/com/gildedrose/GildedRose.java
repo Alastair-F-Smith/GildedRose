@@ -2,6 +2,10 @@ package com.gildedrose;
 
 class GildedRose {
     Item[] items;
+    private static final int MAX_QUALITY = 50;
+    private static final String BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert";
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private static final String AGED_BRIE = "Aged Brie";
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -21,7 +25,7 @@ class GildedRose {
     }
 
     private boolean isLegendary(Item item) {
-        return item.name.equals("Sulfuras, Hand of Ragnaros");
+        return item.name.equals(SULFURAS);
     }
 
     private void updateItemSellByDate(Item item) {
@@ -37,16 +41,16 @@ class GildedRose {
     }
 
     private boolean isAppreciatingItem(Item item) {
-        return item.name.equals("Aged Brie") || isValidBackstagePass(item);
+        return item.name.equals(AGED_BRIE) || isValidBackstagePass(item);
     }
 
     private boolean isValidBackstagePass(Item item) {
-        return item.name.equals("Backstage passes to a TAFKAL80ETC concert") && item.sellIn >= 0;
+        return item.name.equals(BACKSTAGE_PASS) && item.sellIn >= 0;
     }
 
     private void increaseQuality(Item item) {
         int increaseAmount = determineIncreaseAmount(item);
-        item.quality = Math.min(50, item.quality + increaseAmount);
+        item.quality = Math.min(MAX_QUALITY, item.quality + increaseAmount);
     }
 
     private int determineIncreaseAmount(Item item) {
@@ -69,7 +73,7 @@ class GildedRose {
     }
 
     private void decreaseQuality(Item item) {
-        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (item.name.equals(BACKSTAGE_PASS)) {
             item.quality = 0;
         } else {
             int decrease = determineDecreaseAmount(item);
